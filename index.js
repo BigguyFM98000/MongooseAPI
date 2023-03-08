@@ -23,7 +23,6 @@ app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
     res.json({message: "Welcome to my MongoDB API" });
-    console.log(process.env);
 });
 
 //routes middleware
