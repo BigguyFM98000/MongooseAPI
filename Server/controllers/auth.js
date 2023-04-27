@@ -5,8 +5,9 @@ const configData = require('../configs/db_config')
 const {createJWT} = require("./jwt_token");
 
 exports.signup = (req, res, next) => {
-  let { firstname, lastname, email, password, password_confirmation } =
+  let { firstname, lastname, email, password } =
     req.body;
+    console.log(firstname, lastname, email, password);
   User.findOne({ email: email })
     .then((user) => {
       if (user) {
