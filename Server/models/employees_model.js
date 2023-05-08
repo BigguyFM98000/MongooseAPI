@@ -12,7 +12,8 @@ let employeeSchema = new Schema({
     },
     jobtitle: {
         type: String,
-        required: true
+        required: false,
+        default: "HR personnel",
     },
     email: {
         type: String,
@@ -26,7 +27,8 @@ let employeeSchema = new Schema({
     },
     department: {
         type: String,
-        required: true
+        required: false,
+        default: "Talent Acquisition Services"
     },
     date: {
         type: Date,
@@ -34,7 +36,8 @@ let employeeSchema = new Schema({
     },
     user: {
         type: Schema.Types.ObjectId,
-        required: true,
+        required: false,
+        default: "6407103069317b75b34b6ab5",
         ref: 'User'
     }
 });

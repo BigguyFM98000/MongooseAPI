@@ -4,6 +4,8 @@ const bcrypt = require("bcrypt");
 const configData = require('../configs/db_config')
 const {createJWT} = require("./jwt_token");
 
+/* {iss: 'https://accounts.google.com', nbf: 1682860020, aud: '1090611813560-vkabsu4t7seet7aqk9p9d4brifq58c4r.apps.googleusercontent.com', sub: '118440774246375780838', email: 'fm.raphalalani29@gmail.com',} */
+
 exports.signup = (req, res, next) => {
   let { firstname, lastname, email, password } =
     req.body;
@@ -47,9 +49,7 @@ exports.signup = (req, res, next) => {
 
 exports.signin = async (req, res) => {
   let { email, password } = req.body;
-
-  const user = await User.findOne({ email: email })
-
+  const user = await User.findOne({ email: email });
   try{
       if (!user) {
         return res.status(404).json({
@@ -68,13 +68,11 @@ exports.signin = async (req, res) => {
                 if (err) {
                   res.status(400).json({ erros: err });
                 }
-              
                   return res.status(200).json({
                     success: true,
                     token: access_token,
                     message: user,
                   });
-
               }
             );
           })
@@ -84,7 +82,4 @@ exports.signin = async (req, res) => {
         errors: [{ error: err }],
       });
     }
-
-
-
 };
