@@ -10,7 +10,10 @@ const googleRoutes = require('./Server/routes/google_route');
 const PORT = process.env.PORT || 8001;
 const cors = require('cors');
 
-app.use(cors());
+const corsOptions = {
+    origin: ["https://hrconnectapi.onrender.com/", "http://localhost:3000/", "*", "http://localhost:4200"]
+}
+app.use(cors(corsOptions));
 
 mongoose.connect(process.env.CONN_STRING, {
     useNewUrlParser: true,
@@ -22,6 +25,7 @@ mongoose.connect(process.env.CONN_STRING, {
 
 // Middlewares
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.get('/', (req, res) => {
     res.json({message: "Welcome to my MongoDB API" });
