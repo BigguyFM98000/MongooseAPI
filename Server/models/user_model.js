@@ -20,7 +20,7 @@ let userSchema = new Schema({
         type: String,
         required: true
     },
-    profileImage: { type: String },
+    profileImage: { type: String, default: 'https://uploads2.yugioh.com/card_images/257/detail/Dark-Magician.jpg?1375127294' },
     date: {
         type: Date,
         default: () => Date.now()
