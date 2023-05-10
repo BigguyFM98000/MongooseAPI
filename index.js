@@ -3,17 +3,16 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 require('dotenv').config();
-const configData = require('./Server/configs/db_config');
 const authRoutes = require('./Server/routes/auth_routes');
 const userRoutes = require('./Server/routes/user_routes');
 const employeeRoutes = require('./Server/routes/employee_routes');
 const googleRoutes = require('./Server/routes/google_route');
-const PORT = process.env.PORT || configData.PORT;
+const PORT = process.env.PORT || 8001;
 const cors = require('cors');
 
 app.use(cors());
 
-mongoose.connect(process.env.conn_string || configData.conn_string, {
+mongoose.connect(process.env.CONN_STRING, {
     useNewUrlParser: true,
   }).then(() => {
     console.log('Connected to MongoDB');

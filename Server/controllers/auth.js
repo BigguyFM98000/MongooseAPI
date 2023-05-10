@@ -1,10 +1,8 @@
 const User = require("../models/user_model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const configData = require('../configs/db_config')
 const {createJWT} = require("./jwt_token");
-
-/* {iss: 'https://accounts.google.com', nbf: 1682860020, aud: '1090611813560-vkabsu4t7seet7aqk9p9d4brifq58c4r.apps.googleusercontent.com', sub: '118440774246375780838', email: 'fm.raphalalani29@gmail.com',} */
+require('dotenv').config();
 
 exports.signup = (req, res, next) => {
   let { firstname, lastname, email, password } =
@@ -63,7 +61,7 @@ exports.signin = async (req, res) => {
             let access_token = createJWT(user.email, user._id, 3600);
             jwt.verify(
                 access_token,
-                configData.Token_secret,
+               process.env.TOKEN_SECRET,
               (err) => {
                 if (err) {
                   res.status(400).json({ erros: err });
