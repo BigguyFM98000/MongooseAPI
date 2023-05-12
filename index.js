@@ -13,7 +13,7 @@ const cors = require('cors');
 const corsOptions = {
     origin: ["https://hrconnectapi.onrender.com/", "http://localhost:3000/", "*", "https://hr-connect-app.vercel.app/", "http://localhost:8001/"]
 }
-app.use(cors(corsOptions));
+app.use(cors());
 
 mongoose.connect(process.env.CONN_STRING, {
     useNewUrlParser: true,
