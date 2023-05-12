@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const configData = require('../configs/db_config')
 require('dotenv').config();
 
 
