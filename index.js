@@ -11,9 +11,13 @@ const PORT = process.env.PORT || 8001;
 const cors = require('cors');
 
 const corsOptions = {
-    origin: ["https://hrconnectapi.onrender.com/", "http://localhost:3000/", "*", "https://hr-connect-app.vercel.app/", "http://localhost:8001/"]
+    origin: ["https://hrconnectapi.onrender.com", "http://localhost:3000", "*", "https://hr-connect-app.vercel.app", "http://localhost:8001", "http://localhost:4200"]
 }
-app.use(cors());
+
+// Middlewares
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 mongoose.connect(process.env.CONN_STRING, {
     useNewUrlParser: true,
@@ -23,14 +27,9 @@ mongoose.connect(process.env.CONN_STRING, {
     console.log(err.message);
 });
 
-// Middlewares
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-
 app.get('/', (req, res) => {
     res.json({message: "Welcome to my MongoDB API" });
 });
-
 
 //routes middleware
 app.use('/auth', authRoutes);
