@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 8001;
 const cors = require('cors');
 
 const corsOptions = {
-    origin: ["https://hrconnectapi.onrender.com", 'https://hrconnectapi.onrender.com/auth/signin', 'https://hrconnectapi.onrender.com/signup', 'https://hrconnectapi.onrender.com/employee', "https://hrconnectapi.onrender.com/user" , "https://hrconnectapi.onrender.com/google", "http://localhost:3000", "*", "https://hr-connect-app.vercel.app", "http://localhost:8001", "http://localhost:4200"]
+    origin: ["https://hrconnectapi.onrender.com/", 'https://hrconnectapi.onrender.com/auth/signin', 'https://hrconnectapi.onrender.com/signup', 'https://hrconnectapi.onrender.com/employee', "https://hrconnectapi.onrender.com/user" , "https://hrconnectapi.onrender.com/google", "http://localhost:3000", "*", "https://hr-connect-app.vercel.app", "http://localhost:8001", "http://localhost:10000"]
 }
 
 // Middlewares
