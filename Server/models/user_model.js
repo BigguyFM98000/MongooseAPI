@@ -22,7 +22,7 @@ let userSchema = new Schema({
     },
     department: {
         type: String,
-        default: 'Interns'
+        default: 'Talent Acquisition Services'
     },
     profileImage: { type: String, default: 'https://uploads2.yugioh.com/card_images/257/detail/Dark-Magician.jpg?1375127294' },
     date: {

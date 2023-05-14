@@ -28,7 +28,7 @@ let employeeSchema = new Schema({
     department: {
         type: String,
         required: false,
-        default: "Talent Acquisition Services"
+        default: "Interns"
     },
     date: {
         type: Date,
