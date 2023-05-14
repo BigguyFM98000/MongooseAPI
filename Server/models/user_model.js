@@ -29,10 +29,10 @@ let userSchema = new Schema({
         type: Date,
         default: () => Date.now()
     },
-    employee: {
+    employees: [{
         type: [Schema.Types.ObjectId],
         ref: 'Employee'
-    }
+    }]
 });
 
 const User = mongoose.model('User', userSchema);

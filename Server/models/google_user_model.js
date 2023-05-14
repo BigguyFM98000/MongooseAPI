@@ -18,10 +18,20 @@ let userSchema = new Schema({
         type: String,
         required: true,
     },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true
+    },
     date: {
         type: Date,
         default: () => Date.now()
     },
+    employees: [{
+        type: [Schema.Types.ObjectId],
+        ref: 'Employee'
+    }]
 });
 
 const Google = mongoose.model('Google', userSchema);

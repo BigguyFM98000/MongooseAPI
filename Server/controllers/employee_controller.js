@@ -39,6 +39,16 @@ exports.findAll = async (req, res) => {
     }
 };
 
+// Retrieve all employees from the database.
+exports.findAllForUser = async (req, res) => {
+    try {
+        const employee = await EmployeeModel.find({user: req.params.id});
+        res.status(200).json(employee);
+    } catch(error) {
+        res.status(404).json({message: error.message});
+    }
+};
+
 // Find a single Employee with an id
 exports.findOne = async (req, res) => {
     try {

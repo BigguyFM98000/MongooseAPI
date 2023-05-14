@@ -4,6 +4,7 @@ const router = express.Router();
 
 router.get('/', EmployeeController.findAll);
 router.get('/:id', EmployeeController.findOne);
+router.get('/:id', EmployeeController.findAllForUser);
 router.post('/', EmployeeController.create);
 router.put('/:id', EmployeeController.update);
 router.delete('/:id', EmployeeController.destroy);
