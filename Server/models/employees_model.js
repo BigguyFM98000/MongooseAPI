@@ -36,7 +36,7 @@ let employeeSchema = new Schema({
     },
     user: {
         type: String,
-        required: true
+        required: false
     }
 });
 

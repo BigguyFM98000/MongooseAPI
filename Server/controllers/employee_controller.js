@@ -14,7 +14,6 @@ exports.create = async (req, res) => {
         email: req.body.email,
         phonenumber: req.body.phonenumber,
         department: req.body.department,
-        user: req.body.user
     });
     
     await employee.save().then(data => {
