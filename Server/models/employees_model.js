@@ -35,10 +35,8 @@ let employeeSchema = new Schema({
         default: () => Date.now()
     },
     user: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        default: "6407103069317b75b34b6ab5",
-        ref: 'User'
+        type: String,
+        required: true
     }
 });
 
