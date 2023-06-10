@@ -9,8 +9,6 @@ const employeeRoutes = require('./Server/routes/employee_routes');
 const googleRoutes = require('./Server/routes/google_route');
 const resetPasswordRoutes = require('./Server/routes/reset_password');
 const PORT = process.env.PORT || 8001;
-CONN_STRING = 
-"dABaY1ybLvvHdxMg"
 const cors = require('cors');
 
 const corsOptions = {

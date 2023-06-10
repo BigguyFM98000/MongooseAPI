@@ -73,7 +73,7 @@ exports.resetform = async (req, res) => {
       user.password = await bcrypt.hash(password, 10);
       user.resetToken = undefined;
       user.resetTokenExpiration = undefined;
-      await user.save();
+      await UserModel.save();
   
       res.json({ message: 'Password reset successful.' });
     } catch (error) {
