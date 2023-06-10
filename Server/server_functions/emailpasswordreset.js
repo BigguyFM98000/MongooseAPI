@@ -13,7 +13,7 @@ const transportermailer = nodemailer.createTransport({
   });
 
 // Function to send the password reset email
-const sendPasswordResetEmail = async (email, token) => {
+exports.sendPasswordResetEmail = async (email, token) => {
   const mailOptions = {
     from: process.env.APP_EMAIL, // sender address
     to: email, // list of receivers

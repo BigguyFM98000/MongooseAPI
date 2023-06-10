@@ -1,5 +1,5 @@
-const UserModel = require('../models/user_model');
-const sendPasswordResetEmail = require('../server_functions/emailpasswordreset');
+const UserModel = require('../controllers/user_controller');
+const sendPasswordResetEmail = require('../controllers/');
 
 // Step 1: Create a route for the "Forgot Password" form submission
 exports.send = async (req, res) => {
