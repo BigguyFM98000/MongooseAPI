@@ -2,7 +2,7 @@ const express = require('express')
 const UserController = require('../controllers/user_controller')
 const router = express.Router();
 
-router.get('/status', (req, res) => {
+router.get('/clients', (req, res) => {
     res.json({message: "User api is successfully live!!!!" });
 });
 router.get('/:id', UserController.findOne);
