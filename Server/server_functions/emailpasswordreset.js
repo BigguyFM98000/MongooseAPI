@@ -31,5 +31,3 @@ exports.sendPasswordResetEmail = async (email, token) => {
 
   info();
 };
-
-module.exports = sendPasswordResetEmail;
