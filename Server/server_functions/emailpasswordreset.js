@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 
+
 // Create a transporter object using your email service provider's SMTP settings
 const transportermailer = nodemailer.createTransport({
     host: "smtp.ethereal.email",
