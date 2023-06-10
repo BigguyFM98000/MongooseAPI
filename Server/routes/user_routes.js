@@ -8,6 +8,6 @@ router.get('/clients', (req, res) => {
 router.get('/:id', UserController.findOne);
 router.put('/:id', UserController.update);
 router.delete('/:id', UserController.destroy);
-router.get('/', UserController.findAll);
+router.get('/files', UserController.findAll);
 
 module.exports = router
