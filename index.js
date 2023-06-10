@@ -7,6 +7,7 @@ const authRoutes = require('./Server/routes/auth_routes');
 const userRoutes = require('./Server/routes/user_routes');
 const employeeRoutes = require('./Server/routes/employee_routes');
 const googleRoutes = require('./Server/routes/google_route');
+const resetPasswordRoutes = require('./Server/routes/reset_password');
 const PORT = process.env.PORT || 8001;
 CONN_STRING = 
 "dABaY1ybLvvHdxMg"
@@ -38,6 +39,7 @@ app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/employee', employeeRoutes);
 app.use('/google', googleRoutes);
+app.use('/reset', resetPasswordRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server started on http://localhost:${PORT}`);
