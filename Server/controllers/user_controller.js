@@ -1,6 +1,6 @@
 const UserModel = require('../models/user_model');
 
-// Retrieve all employees from the database.
+// Retrieve all users from the database.
 exports.findAll = async (req, res) => {
     try {
         const user = await UserModel.find();
