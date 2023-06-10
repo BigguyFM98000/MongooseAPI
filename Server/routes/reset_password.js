@@ -3,7 +3,7 @@ const ForgotPasswordController = require('../controllers/forgot_password');
 const router = express.Router();
 
 router.get("/status", (req, res) => {
-    res.json({message: "Welcome to Reset API" });
+    res.json({message: "Reset api is successfully live!!!!" });
 });
 router.post("/forgotpassword", ForgotPasswordController.send);
 router.get("/form/:token", ForgotPasswordController.redirect);
