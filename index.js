@@ -8,6 +8,8 @@ const userRoutes = require('./Server/routes/user_routes');
 const employeeRoutes = require('./Server/routes/employee_routes');
 const googleRoutes = require('./Server/routes/google_route');
 const PORT = process.env.PORT || 8001;
+CONN_STRING = 
+"dABaY1ybLvvHdxMg"
 const cors = require('cors');
 
 const corsOptions = {
@@ -19,10 +21,10 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-mongoose.connect(process.env.CONN_STRING, {
+mongoose.connect(`mongodb+srv://${process.env.APP_USER}:${process.env.APP_PASS}@webmobileapplication.jx4opz3.mongodb.net/${process.env.APP_COLLECTION}?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
   }).then(() => {
-    console.log('Connected to MongoDB');
+    console.log('Connected to MongoDB instance');
 }).catch((err) => {
     console.log(err.message);
 });
