@@ -34,8 +34,8 @@ app.get('/', (req, res) => {
 
 //routes middleware
 app.use('/auth', authRoutes);
-app.use('/user', userRoutes);
-app.use('/employee', employeeRoutes);
+app.use('/users', userRoutes);
+app.use('/employees', employeeRoutes);
 app.use('/google', googleRoutes);
 app.use('/reset', resetPasswordRoutes);
 
