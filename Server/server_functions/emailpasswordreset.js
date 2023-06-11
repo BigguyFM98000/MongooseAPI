@@ -5,11 +5,14 @@ const nodemailer = require('nodemailer');
 const transportermailer = nodemailer.createTransport({
     host: process.env.APP_EMAILHOST,
     port: process.env.APP_EMAILPORT,
-    secure: false, // true for 465, false for other ports
+    secureConnection: false, // TLS requires secureConnection to be false
     auth: {
       user: process.env.APP_EMAIL, // generated ethereal user
       pass: process.env.APP_EMAILPW, // generated ethereal password
     },
+    tls: {
+        ciphers:'SSLv3'
+    }
   });
 
 // Function to send the password reset email
