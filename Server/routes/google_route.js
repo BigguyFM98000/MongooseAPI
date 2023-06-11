@@ -4,6 +4,10 @@ const router = express.Router();
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 
+router.get('/status', (req, res) => {
+    res.status(200).json({message: "Google route is successfully listening!!!!" });
+});
+
 router.post('/', GoogleController.create);
 router.put('/:id', GoogleController.update);
 router.get('/', GoogleController.view);

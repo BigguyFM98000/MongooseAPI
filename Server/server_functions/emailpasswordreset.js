@@ -21,13 +21,11 @@ exports.sendPasswordResetEmail = async (email, token) => {
     text: `To reset your password, click on the following link: http://hr-connect.vercel.app/reset-password/${token}`, // plain text body
   };
 
-  const info = await transportermailer.sendMail(mailOptions, (error, info) => {
+  await transportermailer.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.error('Error sending email:', error);
     } else {
       console.log('Password reset email sent:', info.response);
     }
   });
-
-  info();
 };

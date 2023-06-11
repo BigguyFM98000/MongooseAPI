@@ -1,19 +1,25 @@
 const EmployeeModel = require('../models/employees_model');
+const UserModel = require('../models/user_model');
 
 // Create and Save a new employee
 exports.create = async (req, res) => {
-    if (!req.body.firstname && !req.body.lastname && !req.body.jobtile && !req.body.email && !req.body.phonenumber 
-        && !req.body.department) {
+    if (!req.body.firstname && !req.body.lastname && !req.body.jobtile && !req.body.email && !req.body.phonenumber && !req.body.userId ) {
         res.status(400).send({ message: "Content can not be empty!" });
+    }
+
+    // Find the user by their ID
+    const user = await UserModel.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found.' });
     }
     
     const employee = new EmployeeModel({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
-        jobtitle: req.body.jobtitle,
         email: req.body.email,
         phonenumber: req.body.phonenumber,
-        department: req.body.department,
+        user: user._id,
     });
     
     await employee.save().then(data => {

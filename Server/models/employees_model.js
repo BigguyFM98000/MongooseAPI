@@ -34,10 +34,9 @@ let employeeSchema = new Schema({
         type: Date,
         default: () => Date.now()
     },
-    user: {
-        type: String,
-        required: false
-    }
+    user: { type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User', 
+        required: true },
 });
 
 const Employee = mongoose.model('Employee', employeeSchema);
