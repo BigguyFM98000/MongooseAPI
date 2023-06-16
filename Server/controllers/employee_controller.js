@@ -8,7 +8,7 @@ exports.create = async (req, res) => {
     }
 
     // Find the user by their ID
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.findById(req.body.userId);
 
     if (!user) {
       return res.status(404).json({ message: 'User not found.' });
@@ -36,8 +36,21 @@ exports.create = async (req, res) => {
 
 // Retrieve all employees from the database.
 exports.findAll = async (req, res) => {
+    if(!req.body) {
+        res.status(400).send({
+            message: "Data to update can not be empty!"
+        });
+    }
+
+    // Find the user who added the employee by their ID
+    const user = await UserModel.findById(req.body.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found. You must be logged in.' });
+    }
+
     try {
-        const employee = await EmployeeModel.find();
+        const employee = await EmployeeModel.find({user: user._id});
         res.status(200).json(employee);
     } catch(error) {
         res.status(404).json({message: error.message});
@@ -46,8 +59,9 @@ exports.findAll = async (req, res) => {
 
 // Retrieve all employees from the database.
 exports.findAllForUser = async (req, res) => {
+
     try {
-        const employee = await EmployeeModel.find({user: req.params.id});
+        const employee = await EmployeeModel.find({user: req.body.userId});
         res.status(200).json(employee);
     } catch(error) {
         res.status(404).json({message: error.message});
@@ -56,6 +70,19 @@ exports.findAllForUser = async (req, res) => {
 
 // Find a single Employee with an id
 exports.findOne = async (req, res) => {
+    if(!req.body) {
+        res.status(400).send({
+            message: "Data to update can not be empty!"
+        });
+    }
+
+    // Find the user who added the employee by their ID
+    const user = await UserModel.findById(req.body.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found. You must be logged in.' });
+    }
+
     try {
         const employee = await EmployeeModel.findById(req.params.id);
         res.status(200).json(employee);
@@ -71,10 +98,23 @@ exports.update = async (req, res) => {
             message: "Data to update can not be empty!"
         });
     }
+
+    // Find the user who added the employee by their ID
+    const user = await UserModel.findById(req.body.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found. You must be logged in.' });
+    }
     
-    const id = req.params.id;
-    
-    await EmployeeModel.findByIdAndUpdate(id, req.body, { useFindAndModify: false }).then(data => {
+    const body = {
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        phonenumber: req.body.phonenumber,
+        user: user._id
+    };
+    const id = req.params.id
+    await EmployeeModel.findByIdAndUpdate(id, body, { useFindAndModify: false }).then(data => {
         if (!data) {
             res.status(404).send({
                 message: `Employee not found.`
@@ -91,6 +131,18 @@ exports.update = async (req, res) => {
 
 // Delete an employee with the specified id in the request
 exports.destroy = async (req, res) => {
+    if(!req.body.userId) {
+        res.status(400).send({
+            message: "Data to update cannot be empty!"
+        });
+    }
+    // Find the user who added the employee by their ID
+    const user = await UserModel.findById(req.body.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found. You must be logged in.' });
+    }
+
     await EmployeeModel.findByIdAndRemove(req.params.id).then(data => {
         if (!data) {
           res.status(404).send({

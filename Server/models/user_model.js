@@ -24,7 +24,7 @@ let userSchema = new Schema({
         type: String,
         default: 'Talent Acquisition Services'
     },
-    profileImage: { type: String, default: 'https://uploads2.yugioh.com/card_images/257/detail/Dark-Magician.jpg?1375127294' },
+    profileImage: { type: String, default: 'https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=' },
     date: {
         type: Date,
         default: () => Date.now()

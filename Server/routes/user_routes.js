@@ -9,6 +9,6 @@ router.get('/status', (req, res) => {
 router.get('/:id', UserController.findOne);
 router.put('/:id', UserController.update);
 router.delete('/:id', UserController.destroy);
-router.get('/files', UserController.findAll);
+router.get('/', UserController.findAll);
 
 module.exports = router
