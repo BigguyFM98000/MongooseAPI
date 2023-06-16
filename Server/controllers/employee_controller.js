@@ -36,18 +36,6 @@ exports.create = async (req, res) => {
 
 // Retrieve all employees from the database.
 exports.findAll = async (req, res) => {
-    if(!req.body) {
-        res.status(400).send({
-            message: "Data to update can not be empty!"
-        });
-    }
-
-    // Find the user who added the employee by their ID
-    const user = await UserModel.findById(req.body.userId);
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found. You must be logged in.' });
-    }
 
     try {
         const employee = await EmployeeModel.find({user: user._id});
