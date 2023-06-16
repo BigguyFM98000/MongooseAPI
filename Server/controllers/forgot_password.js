@@ -1,29 +1,37 @@
 const UserModel = require('../models/user_model');
 const sendPasswordResetEmail = require('../server_functions/emailpasswordreset');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
 // Step 1: Create a route for the "Forgot Password" form submission
 exports.send = async (req, res) => {
   const { email } = req.body;
 
+  const verifyCode = crypto.randomBytes(35).toString('hex');
+    const verificationCode = crypto
+      .createHash('sha256')
+      .update(verifyCode)
+      .digest('hex');
+
   // Generate a random salt
-  const randonBytes = () => bcrypt.genSalt(10, (err, salt) => {
-    if (err) {
-      console.error('Error generating salt:', err);
-    }
+  // const randonBytes = () => bcrypt.genSalt(10, (err, salt) => {
+  //   if (err) {
+  //     console.error('Error generating salt:', err);
+  //   }
 
     // Use the salt for hashing or other purposes
-    const tokensalt = salt.toString('hex');
-    return tokensalt;
-  });
+  //   const tokensalt = salt.toString('hex');
+  //   console.log(tokensalt);
+  //   return tokensalt;
+  // });
 
-  const token = randonBytes();
+  // const token = randonBytes();
   const expirationTime = Date.now() + 3600000; // 1 hour from now
 
   try {
     const user = await UserModel.findOneAndUpdate(
       { email },
-      { resetToken: token, resetTokenExpiration: expirationTime }
+      { resetToken: verificationCode, resetTokenExpiration: expirationTime }
     );
 
     if (!user) {
@@ -32,7 +40,7 @@ exports.send = async (req, res) => {
     }
 
     // Step 3: Send an email with the password reset link containing the token
-    sendPasswordResetEmail.sendPasswordResetEmail(email, token);
+    sendPasswordResetEmail.sendPasswordResetEmail(email, verificationCode);
 
     res.json({ message: 'Password reset email sent.' });
   } catch (error) {
