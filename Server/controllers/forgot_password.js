@@ -12,7 +12,7 @@ exports.send = async (req, res) => {
       .createHash('sha256')
       .update(verifyCode)
       .digest('hex');
-      
+
   const expirationTime = Date.now() + 3600000; // 1 hour from now
 
   try {
@@ -61,8 +61,8 @@ exports.redirect = async (req, res) => {
 
 // Step 5: Create a route to handle the password reset form submission
 exports.resetform = async (req, res) => {
-  const { token } = req.params;
-  const { password } = req.body;
+  const { token } = req.params.token;
+  const { password } = req.body.password;
 
   try {
     const user = await UserModel.findOne({
