@@ -20,7 +20,7 @@ exports.sendPasswordResetEmail = async (email, token) => {
   const mailOptions = {
     from: process.env.APP_EMAIL, // sender address
     to: email, // list of receivers
-    subject: "Password Reset", // Subject line
+    subject: "HRConnect Password Reset Link", // Subject line
     text: `To reset your password, click on the following link: http://hr-connect.vercel.app/reset-password/${token}`, // plain text body
   };
 

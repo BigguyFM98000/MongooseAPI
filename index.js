@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 8001;
 const cors = require('cors');
 
 const corsOptions = {
-    origin: ["https://hrconnectapi.onrender.com/", 'https://hrconnectapi.onrender.com/auth/signin', 'https://hrconnectapi.onrender.com/auth/signup', 'https://hrconnectapi.onrender.com/employee', "https://hrconnectapi.onrender.com/user/:id" , "https://hrconnectapi.onrender.com/google", "http://localhost:3000", "*", "https://hr-connect.vercel.app/", "http://localhost:8001", "http://localhost:8001/users", "http://localhost:8001/employees", "http://localhost:8001/reset", "http://localhost:8001/reset/status", "http://localhost:8001/auth", "http://localhost:8001/google", "http://localhost:10000", "https://hrconnectapi.onrender.com/reset/forgotpassword", "https://hrconnectapi.onrender.com/user/status", "https://hrconnectapi.onrender.com/user/files", cors()]
+    origin: ["https://hrconnectapi.onrender.com/", 'https://hrconnectapi.onrender.com/auth/signin', 'https://hrconnectapi.onrender.com/auth/signup', 'https://hrconnectapi.onrender.com/employee', "https://hrconnectapi.onrender.com/user/:id" , "https://hrconnectapi.onrender.com/google", "http://localhost:3000", "*", "https://hr-connect.vercel.app/", "http://localhost:8001", "http://localhost:8001/users", "http://localhost:8001/employees", "http://localhost:8001/reset/forgotpassword", "http://localhost:8001/reset/status", "http://localhost:8001/reset/password/:token", "http://localhost:8001/auth", "http://localhost:8001/google", "http://localhost:10000", "https://hrconnectapi.onrender.com/reset/forgotpassword", "https://hrconnectapi.onrender.com/user/status", "https://hrconnectapi.onrender.com/reset/password/:token","https://hrconnectapi.onrender.com/user/files", cors()]
 }
 
 // Middlewares
