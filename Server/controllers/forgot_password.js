@@ -12,20 +12,7 @@ exports.send = async (req, res) => {
       .createHash('sha256')
       .update(verifyCode)
       .digest('hex');
-
-  // Generate a random salt
-  // const randonBytes = () => bcrypt.genSalt(10, (err, salt) => {
-  //   if (err) {
-  //     console.error('Error generating salt:', err);
-  //   }
-
-    // Use the salt for hashing or other purposes
-  //   const tokensalt = salt.toString('hex');
-  //   console.log(tokensalt);
-  //   return tokensalt;
-  // });
-
-  // const token = randonBytes();
+      
   const expirationTime = Date.now() + 3600000; // 1 hour from now
 
   try {
