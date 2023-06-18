@@ -21,7 +21,7 @@ exports.sendPasswordResetEmail = async (email, token) => {
     from: process.env.APP_EMAIL, // sender address
     to: email, // list of receivers
     subject: "HRConnect Password Reset Link", // Subject line
-    text: `To reset your password, click on the following link: http://hr-connect.vercel.app/reset/password/${token}`, // plain text body
+    text: `To reset your password, click on the following link: http://hr-connect.vercel.app/reset-password/${token}`, // plain text body
   };
 
   await transportermailer.sendMail(mailOptions, (error, info) => {
