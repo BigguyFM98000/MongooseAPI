@@ -1,17 +1,21 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+let counter = 0;
 
 let googleUserSchema = new Schema({
-    given_name: {
+    givenname: {
         type: String,
         required: true
     },
-    family_name: {
+    familyname: {
         type: String,
         required: true
     },
-   
-    picture: {
+    fullname: {
+        type: String,
+        required: true
+    },
+    profilepicture: {
         type: String,
         required: true,
     },
@@ -25,7 +29,10 @@ let googleUserSchema = new Schema({
         type: Date,
         default: () => Date.now()
     },
-  
+    numberofvisits: {
+        type: Number,
+        default: counter++
+    }
 });
 
 const Google = mongoose.model('Google', googleUserSchema);

@@ -3,6 +3,9 @@ require('dotenv').config();
 require('dotenv').config();
 
 exports.google_signin = async (req, res) => {
+  if(!req.body){
+    console.log('Invalid google login attempt');
+  }
     let { email } = req.body;
     const google_user = await GoogleModel.findOne({ email: email });
     try{
@@ -12,10 +15,11 @@ exports.google_signin = async (req, res) => {
           });
         } else {
             const google_user = new GoogleModel({
-                given_name: given_name,
-                family_name: family_name,
-                picture: profile_picture,
-                email: email,
+                givenname: req.body.givenname,
+                familyname: req.body.familyname,
+                fullname: req.body.fullname,
+                email: req.body.email,
+                profilepicture: req.body.profilepicture,
               });
               google_user.save().then((response) => {
                 res.status(200).json({
