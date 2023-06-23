@@ -9,7 +9,6 @@ const addHours = (date, hours) => {
   return date;
 }
 
-
 // Step 1: Create a route for the "Forgot Password" form submission
 exports.send = async (req, res) => {
   const { email } = req.body;
@@ -46,7 +45,7 @@ exports.send = async (req, res) => {
 
 // Step 4: Create a route for the password reset page
 exports.redirect = async (req, res) => {
-  const { token } = req.params;
+  const { token } = req.params.token;
 
   try {
     const user = await UserModel.findOne({
