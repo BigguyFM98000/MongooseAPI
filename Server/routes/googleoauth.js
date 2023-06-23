@@ -6,6 +6,6 @@ router.get('/status', (req, res) => {
     res.status(200).json({message: "Google route is successfully listening!!!!" });
 });
 
-router.post('/signin', GoogleService.google_signin);
+router.post('/login', GoogleService.google_signin);
 
 module.exports = router;
