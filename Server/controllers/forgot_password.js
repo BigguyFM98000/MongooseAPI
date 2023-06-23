@@ -3,6 +3,13 @@ const sendPasswordResetEmail = require('../server_functions/emailpasswordreset')
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
+const addHours = (date, hours) => {
+  date.setTime(date.getTime() + hours * 60 * 60 * 1000);
+
+  return date;
+}
+
+
 // Step 1: Create a route for the "Forgot Password" form submission
 exports.send = async (req, res) => {
   const { email } = req.body;
@@ -13,7 +20,8 @@ exports.send = async (req, res) => {
       .update(verifyCode)
       .digest('hex');
 
-  const expirationTime = Date.now() + 3600000; // 1 hour from now
+  const expirationTime = addHours(new Date(), 1); // 1 hour from now    
+  // const expirationTime = Date.now() + 3600000; 
 
   try {
     const user = await UserModel.findOneAndUpdate(
@@ -23,7 +31,7 @@ exports.send = async (req, res) => {
 
     if (!user) {
       // Handle case where user with the provided email doesn't exist
-      return res.status(404).json({ message: 'User not found.' });
+      return res.status(404).json({ message: 'Email provided not registered in the application.' });
     }
 
     // Step 3: Send an email with the password reset link containing the token
@@ -32,7 +40,7 @@ exports.send = async (req, res) => {
     res.json({ message: 'Password reset email sent.' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error.' });
+    res.status(500).json({ message: 'Server error while sending reset lint to email' });
   }
 }
 
@@ -42,17 +50,18 @@ exports.redirect = async (req, res) => {
 
   try {
     const user = await UserModel.findOne({
-      resetToken: token,
-      resetTokenExpiration: { $gt: Date.now() }
+      resetToken,
+      resetTokenExpiration
     });
 
-    if (!user) {
-      // Handle case where token is invalid or expired
+    const timeNow = new Date();
+    if (timeNow < resetTokenExpiration.resetTokenExpiration) {
+      // Render the password reset page
+      res.render('reset-password', { token });
+    }else{
+      // Handle case of expired token being sent
       return res.status(400).json({ message: 'Invalid or expired token.' });
     }
-
-    // Render the password reset page
-    res.render('reset-password', { token });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error.' });
@@ -67,7 +76,7 @@ exports.resetform = async (req, res) => {
   try {
     const user = await UserModel.findOne({
       resetToken: token,
-      resetTokenExpiration: { $gt: Date.now() }
+      resetTokenExpiration: Date.now() 
     });
 
     if (!user) {
@@ -84,6 +93,6 @@ exports.resetform = async (req, res) => {
     res.json({ message: 'Password reset successful.' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error.' });
+    res.status(500).json({ message: 'Server error.' }); 
   }
 }

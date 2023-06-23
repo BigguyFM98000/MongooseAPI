@@ -29,13 +29,19 @@ let userSchema = new Schema({
         type: String,
         default: "normal-auth",
       },
+      resetToken: {
+        type: String,
+      },
+      resetTokenExpiration: {
+        type: String,
+      },
     lastVisited: {
         type: Date,
         default: new Date(),
       },
     dateCreated: {
         type: Date,
-        default: () => Date.now()
+        default: () => Date.now(),
     },
 });
 
