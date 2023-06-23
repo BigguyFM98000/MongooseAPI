@@ -49,8 +49,8 @@ exports.redirect = async (req, res) => {
 
   try {
     const user = await UserModel.findOne({
-      resetToken,
-      resetTokenExpiration
+      resetToken: resetToken,
+      resetTokenExpiration: resetTokenExpiration
     });
 
     const timeNow = new Date();
