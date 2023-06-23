@@ -1,12 +1,17 @@
 const express = require('express');
+const rateLimit = require('express-rate-limit');
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 require('dotenv').config();
+const cluster =  require("cluster");
+const { cpus } = require("os");
+const { pid } = require("process");
+
 const authRoutes = require('./Server/routes/auth_routes');
 const userRoutes = require('./Server/routes/user_routes');
 const employeeRoutes = require('./Server/routes/employee_routes');
-const googleRoutes = require('./Server/routes/google_route');
+const googleLoginRoutes = require('./Server/routes/googleoauth');
 const resetPasswordRoutes = require('./Server/routes/reset_password');
 const PORT = process.env.PORT || 8001;
 const cors = require('cors');
@@ -19,6 +24,12 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+const apiLimiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
 
 mongoose.connect(`mongodb+srv://${process.env.APP_USER}:${process.env.APP_PASS}@webmobileapplication.jx4opz3.mongodb.net/${process.env.APP_COLLECTION}?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
@@ -28,17 +39,35 @@ mongoose.connect(`mongodb+srv://${process.env.APP_USER}:${process.env.APP_PASS}@
     console.log(err.message);
 });
 
-app.get('/', (req, res) => {
-    res.json({message: "Welcome to my MongoDB API" });
-});
+if (cluster.isPrimary) {
+    console.log(`Primary ${pid} is running`);
+  
+    // Fork workers.
+    for (let i = 0; i < cpus().length; i++) {
+      cluster.fork();
+    }
+  
+    cluster.on("exit", (worker) => {
+      console.log(`worker ${worker.process.pid} died`);
+    });
+  } else {
 
-//routes middleware
-app.use('/auth', authRoutes);
-app.use('/users', userRoutes);
-app.use('/employees', employeeRoutes);
-app.use('/google', googleRoutes);
-app.use('/reset', resetPasswordRoutes);
+    app.get('/', (req, res) => {
+        res.json({message: "Welcome to my MongoDB API" });
+    });
+    
+    //routes middleware
+    app.use('/auth', apiLimiter, authRoutes);
+    app.use('/users', apiLimiter, userRoutes);
+    app.use('/employees', apiLimiter, employeeRoutes);
+    app.use('/googlelogin', apiLimiter, googleLoginRoutes);
+    app.use('/reset', apiLimiter, resetPasswordRoutes);
+    
+    app.listen(PORT, () => {
+        console.log(`Server started on http://localhost:${PORT}`);
+    });
 
-app.listen(PORT, () => {
-    console.log(`Server started on http://localhost:${PORT}`);
-});
+    console.log(`Worker ${pid} started`);
+
+  }
+

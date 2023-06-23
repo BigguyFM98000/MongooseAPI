@@ -1,4 +1,11 @@
-const User = require("../models/user_model");
-const UserService = require("../server_functions/signin_using_google");
+const express = require('express');
+const GoogleService = require("../controllers/google_controller");
+const router = express.Router();
 
-module.exports = UserService(User);
+router.get('/status', (req, res) => {
+    res.status(200).json({message: "Google route is successfully listening!!!!" });
+});
+
+router.post('/signin', GoogleService.google_signin);
+
+module.exports = router;
