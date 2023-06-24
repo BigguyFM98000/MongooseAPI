@@ -28,15 +28,14 @@ let employeeSchema = new Schema({
     department: {
         type: String,
         required: false,
-        default: "Interns"
+        default: "Talent Aquisition"
     },
     date: {
         type: Date,
         default: () => Date.now()
     },
     user: { type: mongoose.Schema.Types.ObjectId, 
-        ref: 'User', 
-        required: true },
+        ref: 'User' },
 });
 
 const Employee = mongoose.model('Employee', employeeSchema);

@@ -1,0 +1,19 @@
+{
+    "success": true,
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN3ZWV0Y2Fycm9sQGdtYWlsLmNvbSIsInVzZXJJZCI6IjY0NWY3MWUyOTkwZjBjMjFkN2YzZmI0ZSIsImR1cmF0aW9uIjozNjAwLCJpYXQiOjE2ODc1ODQ1NDUsImV4cCI6MTY4NzU4ODE0NX0.1rE7UTlJyFPODJOfGJDKA1SYISWyiJp_eHx2KxCXNDA",
+    "message": {
+        "source": "normal-auth",
+        "lastVisited": "2023-06-24T04:34:22.993Z",
+        "_id": "645f71e2990f0c21d7f3fb4e",
+        "firstname": "Carrol",
+        "lastname": "Gorgeous",
+        "email": "sweetcarrol@gmail.com",
+        "password": "$2b$10$itx7hRv0nUevZXkObxFfRuQY70yXq54psXQbkALIpbDA0tjFzsIPW",
+        "department": "Interns",
+        "profileImage": "https://uploads2.yugioh.com/card_images/257/detail/Dark-Magician.jpg?1375127294",
+        "employee": [],
+        "date": "2023-05-13T11:17:54.920Z",
+        "__v": 0,
+        "dateCreated": "2023-06-24T05:29:05.035Z"
+    }
+}
