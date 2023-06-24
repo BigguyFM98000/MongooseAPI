@@ -2,7 +2,7 @@ const EmployeeModel = require('../models/employees_model');
 const UserModel = require('../models/user_model');
 
 // Create and Save a new employee
-exports.create = async (req, res) => {
+exports.create = (req, res) => {
     if (!req.body.firstname && !req.body.lastname && !req.body.jobtile && !req.body.email && !req.body.phonenumber && !req.body.userId ) {
         res.status(400).send({ message: "Content can not be empty!" });
     }
@@ -12,14 +12,15 @@ exports.create = async (req, res) => {
         lastname: req.body.lastname,
         email: req.body.email,
         phonenumber: req.body.phonenumber,
-        user: req.body.userId,
+        user: req.body.userId
     });
     
-    await employee.save().then(data => {
-        res.send({
+    employee.save().then((response) => {
+        res.status(200).json({
+            success: true,
+            result: response,
             message: "User created successfully!!",
-            employee: data
-        });
+          });
     }).catch(err => {
         res.status(500).send({
             message: err.message || "Some error occurred while creating employee"
