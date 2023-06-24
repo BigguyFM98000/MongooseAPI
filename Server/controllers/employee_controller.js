@@ -6,20 +6,13 @@ exports.create = async (req, res) => {
     if (!req.body.firstname && !req.body.lastname && !req.body.jobtile && !req.body.email && !req.body.phonenumber && !req.body.userId ) {
         res.status(400).send({ message: "Content can not be empty!" });
     }
-
-    // Find the user by their ID
-    const user = await UserModel.findById(req.body.userId);
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found.' });
-    }
     
     const employee = new EmployeeModel({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
         phonenumber: req.body.phonenumber,
-        user: user._id,
+        user: req.body.userId,
     });
     
     await employee.save().then(data => {
