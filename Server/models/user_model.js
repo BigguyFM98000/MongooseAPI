@@ -50,7 +50,7 @@ let userSchema = new Schema({
   },
   dateCreated: {
     type: String,
-    default: () => new Date.toString(),
+    default: () => new Date().toString(),
   },
 });
 
