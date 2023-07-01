@@ -8,6 +8,6 @@ router.get("/status", (req, res) => {
 
 router.post("/forgotpassword", ForgotPasswordController.send);
 router.get("/form/:token", ForgotPasswordController.redirect);
-router.post("/password/:token", ForgotPasswordController.resetform);
+router.post("/password", ForgotPasswordController.resetform);
 
 module.exports = router;
