@@ -36,17 +36,17 @@ let userSchema = new Schema({
     default: "787a896be5383be3be12f63c6cc054e76b95f8c0ee556e2688bb756394773d84",
   },
   resetTokenSentTime: {
-    type: Date,
-    default: Date.now(),
+    type: String,
+    default: new Date().toLocaleString(),
   },
   resetTokenExpirationTime: {
-    type: Date,
-    default: Date.now(),
+    type: String,
+    default: new Date().toLocaleString(),
   },
   lastVisited: {
     type: Date,
-    default: new Date().toLocaleString()
-    ,
+    default: new Date().toLocaleString(),
+    
   },
   dateCreated: {
     type: String,
