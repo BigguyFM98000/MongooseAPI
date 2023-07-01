@@ -33,14 +33,12 @@ exports.create = (req, res) => {
 
 // Retrieve all employees from the database.
 exports.findAll = async (req, res) => {
-    if(!req.body) {
-        res.status(400).send({
-            message: "Data to update can not be empty!"
-        });
+    if(!req.params.user) {
+        req.params.userId = "64a075971f69fd0649069afe";
     }
 
     // Find the user who added the employee by their ID
-    const user = await UserModel.findById(req.body.userId);
+    const user = await UserModel.findById(req.params.userId);
 
     if (!user) {
       return res.status(404).json({ message: 'User not found. You must be logged in.' });
@@ -54,16 +52,7 @@ exports.findAll = async (req, res) => {
     }
 };
 
-// Retrieve all employees from the database.
-exports.findAllForUser = async (req, res) => {
 
-    try {
-        const employee = await EmployeeModel.find({user: req.body.userId});
-        res.status(200).json(employee);
-    } catch(error) {
-        res.status(404).json({message: error.message});
-    }
-};
 
 // Find a single Employee with an id
 exports.findOne = async (req, res) => {

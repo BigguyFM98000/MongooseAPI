@@ -6,7 +6,7 @@ router.get('/status', (req, res) => {
     res.status(200).json({message: "Employees route is successfully listening!!!!" });
 });
 
-router.get('/files', EmployeeController.findAll);
+router.get('/files/:userId', EmployeeController.findAll);
 router.get('/:id', EmployeeController.findOne);
 router.post('/add', EmployeeController.create);
 router.put('/:id', EmployeeController.update);
