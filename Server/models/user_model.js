@@ -49,8 +49,8 @@ let userSchema = new Schema({
     ,
   },
   dateCreated: {
-    type: Date,
-    default: () => Date.now(),
+    type: String,
+    default: () => new Date.toString(),
   },
 });
 
