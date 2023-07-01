@@ -76,7 +76,7 @@ exports.resetform = async (req, res) => {
   try {
     const user = await UserModel.findOne({
       resetToken: token,
-      email: email
+      email: email,
     });
     if (!user) {
       // Handle case where token is invalid or expired
