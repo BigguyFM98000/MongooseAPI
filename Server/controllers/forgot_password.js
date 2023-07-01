@@ -69,7 +69,8 @@ exports.redirect = async (req, res) => {
 
 // Step 5: Create a route to handle the password reset form submission
 exports.resetform = async (req, res) => {
-  const { token } = req.params.token;
+  const { token } = req.body.token;
+  const { resetTokenExpirationTime } = req.body.resetTokenExpirationTime;
   const { password } = req.body.password;
   const { email } = req.body.email;
 
