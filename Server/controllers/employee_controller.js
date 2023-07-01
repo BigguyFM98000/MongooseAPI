@@ -79,24 +79,24 @@ exports.findOne = async (req, res) => {
 
 // Update a employee by the id in the request
 exports.update = async (req, res) => {
-    if(!req.params.user) {
-        req.params.userId = "64a075971f69fd0649069afe";
+    if(!req.body.user) {
+        req.body.userId = "64a075971f69fd0649069afe";
     }
 
     // Find the user who added the employee by their ID
-    const user = await UserModel.findById(req.params.userId);
+    const user = await UserModel.findById(req.body.userId);
 
     if (!user) {
       return res.status(404).json({ message: 'User not found. You must be logged in.' });
     }
     
-    const body = {
+    const body = JSON.stringify({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
         phonenumber: req.body.phonenumber,
         user: user._id
-    };
+    });
     const id = req.params.id
     await EmployeeModel.findByIdAndUpdate(id, body, { useFindAndModify: false }).then(data => {
         if (!data) {
