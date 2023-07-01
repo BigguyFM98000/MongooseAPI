@@ -25,15 +25,15 @@ let userSchema = new Schema({
     default: 'Talent Acquisition Services'
   },
   profileImage: {
-    type: String, default: 'https://www.nicepng.com/png/detail/933-9332131_profile-picture-default-png.png'
+    type: String, default: 'https://www.nicepng.com/png/detail/933-9332131_profile-picture-default-png.png',
   },
   source: {
-    type: Date,
+    type: String,
     default: "normal-auth",
   },
   resetToken: {
-    type: Date,
-    default: "787a896be5383be3be12f63c6cc054e76b95f8c0ee556e2688bb756394773d84"
+    type: String,
+    default: "787a896be5383be3be12f63c6cc054e76b95f8c0ee556e2688bb756394773d84",
   },
   resetTokenSentTime: {
     type: Date,
