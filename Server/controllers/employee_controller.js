@@ -3,8 +3,11 @@ const UserModel = require('../models/user_model');
 
 // Create and Save a new employee
 exports.create = (req, res) => {
-    if (!req.body.firstname && !req.body.lastname && !req.body.jobtile && !req.body.email && !req.body.phonenumber && !req.body.userId ) {
+    if (!req.body.firstname && !req.body.lastname && !req.body.jobtile && !req.body.email && !req.body.phonenumber ) {
         res.status(400).send({ message: "Content can not be empty!" });
+    }
+    if (!req.body.userId){
+        req.body.userId = "64a075971f69fd0649069afe";
     }
     
     const employee = new EmployeeModel({
