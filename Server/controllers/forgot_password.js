@@ -5,7 +5,6 @@ const crypto = require('crypto');
 
 const addHours = (date, hours) => {
   date.setTime(date.getTime() + hours * 60 * 60 * 1000);
-
   return date;
 }
 
@@ -19,19 +18,20 @@ exports.send = async (req, res) => {
       .update(verifyCode)
       .digest('hex');
 
-  const expirationTime = addHours(new Date(), 1); // 1 hour from now    
+  const TokenSentTime = new Date().toString(); // time link is sent   
   // const expirationTime = Date.now() + 3600000; 
 
-  try {
-    const user = await UserModel.findOneAndUpdate(
-      { email },
-      { resetToken: verificationCode, resetTokenExpiration: expirationTime }
-    );
+  
 
+  try {
+    const user = await UserModel.findOne({ email });
+    console.log(user);
     if (!user) {
       // Handle case where user with the provided email doesn't exist
       return res.status(404).json({ message: 'Email provided not registered in the application.' });
     }
+    user.resetToken = verificationCode;
+    user.resetTokenSentTime = TokenSentTime;
 
     // Step 3: Send an email with the password reset link containing the token
     sendPasswordResetEmail.sendPasswordResetEmail(email, verificationCode);
@@ -71,13 +71,13 @@ exports.redirect = async (req, res) => {
 exports.resetform = async (req, res) => {
   const { token } = req.params.token;
   const { password } = req.body.password;
+  const { email } = req.body.email;
 
   try {
     const user = await UserModel.findOne({
       resetToken: token,
-      resetTokenExpiration: Date.now() 
+      email: email
     });
-
     if (!user) {
       // Handle case where token is invalid or expired
       return res.status(400).json({ message: 'Invalid or expired token.' });
@@ -85,8 +85,7 @@ exports.resetform = async (req, res) => {
 
     // Update the user's password and clear the reset token fields
     user.password = await bcrypt.hash(password, 10);
-    user.resetToken = undefined;
-    user.resetTokenExpiration = undefined;
+    user.resetTokenExpirationTime = new Date().toString();
     await UserModel.save();
 
     res.json({ message: 'Password reset successful.' });
