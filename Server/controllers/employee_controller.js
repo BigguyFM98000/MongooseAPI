@@ -79,14 +79,12 @@ exports.findOne = async (req, res) => {
 
 // Update a employee by the id in the request
 exports.update = async (req, res) => {
-    if(!req.body) {
-        res.status(400).send({
-            message: "Data to update can not be empty!"
-        });
+    if(!req.params.user) {
+        req.params.userId = "64a075971f69fd0649069afe";
     }
 
     // Find the user who added the employee by their ID
-    const user = await UserModel.findById(req.body.userId);
+    const user = await UserModel.findById(req.params.userId);
 
     if (!user) {
       return res.status(404).json({ message: 'User not found. You must be logged in.' });
