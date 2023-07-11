@@ -20,8 +20,9 @@ exports.send = async (req, res) => {
 
   const TokenSentTime = new Date().toString(); // time link is sent   
   // const expirationTime = Date.now() + 3600000; 
-
-  
+  const oneHourAfter = new Date();
+  oneHourAfter.setHours(oneHourAfter.getHours() + 1); // add one hour to curerent time
+  const resetTokenExpiration = oneHourAfter.toString();
 
   try {
     const user = await UserModel.findOne({ email });
@@ -32,6 +33,7 @@ exports.send = async (req, res) => {
     }
     user.resetToken = verificationCode;
     user.resetTokenSentTime = TokenSentTime;
+    user.resetTokenExpirationTime = resetTokenExpiration;
 
     // Step 3: Send an email with the password reset link containing the token
     sendPasswordResetEmail.sendPasswordResetEmail(email, verificationCode);
@@ -82,6 +84,7 @@ exports.resetform = async (req, res) => {
       return res.status(400).json({ message: 'Invalid or expired token.' });
     }
 
+    
     // Update the user's password and clear the reset token fields
     user.password = await bcrypt.hash(password, 10);
     user.resetTokenExpirationTime = new Date().toString();

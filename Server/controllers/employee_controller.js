@@ -38,7 +38,7 @@ exports.findAll = async (req, res) => {
     }
 
     // Find the user who added the employee by their ID
-    const user = await UserModel.findById(req.params.userId);
+    const user = await UserModel.findById(req.params.userId).lean();
 
     if (!user) {
       return res.status(404).json({ message: 'User not found. You must be logged in.' });
@@ -63,14 +63,14 @@ exports.findOne = async (req, res) => {
     }
 
     // Find the user who added the employee by their ID
-    const user = await UserModel.findById(req.body.userId);
+    const user = await UserModel.findById(req.body.userId).lean();
 
     if (!user) {
       return res.status(404).json({ message: 'User not found. You must be logged in.' });
     }
 
     try {
-        const employee = await EmployeeModel.findById(req.params.id);
+        const employee = await EmployeeModel.findById(req.params.id).lean();
         res.status(200).json(employee);
     } catch(error) {
         res.status(404).json({ message: error.message});
@@ -84,7 +84,7 @@ exports.update = async (req, res) => {
     }
 
     // Find the user who added the employee by their ID
-    const user = await UserModel.findById(req.body.userId);
+    const user = await UserModel.findById(req.body.userId).lean();
 
     if (!user) {
       return res.status(404).json({ message: 'User not found. You must be logged in.' });
@@ -121,7 +121,7 @@ exports.destroy = async (req, res) => {
         });
     }
     // Find the user who added the employee by their ID
-    const user = await UserModel.findById(req.body.userId);
+    const user = await UserModel.findById(req.body.userId).lean();
 
     if (!user) {
       return res.status(404).json({ message: 'User not found. You must be logged in.' });
