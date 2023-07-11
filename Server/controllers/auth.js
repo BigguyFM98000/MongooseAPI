@@ -6,7 +6,7 @@ require('dotenv').config();
 
 exports.signin = async (req, res) => {
   let { email, password } = req.body;
-  const user = await User.findOne({ email: email });
+  const user = await User.findOne({}).select("email");
   try{
       if (!user) {
         return res.status(404).json({
@@ -45,7 +45,7 @@ exports.signup = (req, res, next) => {
   let { firstname, lastname, email, password } =
     req.body;
     console.log(firstname, lastname, email, password);
-  User.findOne({ email: email })
+  User.findOne({}).select("email")
     .then((user) => {
       if (user) {
         return res
