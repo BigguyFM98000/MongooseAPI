@@ -3,7 +3,7 @@ const UserModel = require('../models/user_model');
 // Retrieve all users from the database.
 exports.findAll = async (req, res) => {
     try {
-        const user = await UserModel.find();
+        const user = await UserModel.find().lean();
         res.status(200).json(user);
     } catch(error) {
         res.status(404).json({message: error.message});
@@ -13,7 +13,7 @@ exports.findAll = async (req, res) => {
 // Find a single User with an id
 exports.findOne = async (req, res) => {
     try {
-        const user = await UserModel.findById(req.params.id);
+        const user = await UserModel.findById(req.params.id).lean();
         res.status(200).json(user);
     } catch(error) {
         res.status(404).json({ message: error.message});
