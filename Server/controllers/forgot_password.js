@@ -75,9 +75,19 @@ exports.resetform = async (req, res) => {
   const token = req.body.token;
   const resetTokenExpirationTime = req.body.resetTokenExpirationTime;
   let userId;
+  let hashedPassword;
+
+  const useDetails = await UserModel.findOne({ token })
+    .then((res) => {
+      userId = res._id;
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ message: 'Server error.' });
+    });
 
   try {
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    hashedPassword = await bcrypt.hash(newPassword, 10);
     // Update the user's password and clear the reset token fields
     const body = {
       token: token,
@@ -92,5 +102,4 @@ exports.resetform = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Server error.' });
   }
-  
 };
