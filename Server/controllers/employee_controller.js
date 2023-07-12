@@ -52,8 +52,6 @@ exports.findAll = async (req, res) => {
     }
 };
 
-
-
 // Find a single Employee with an id
 exports.findOne = async (req, res) => {
     if(!req.body) {
@@ -79,33 +77,25 @@ exports.findOne = async (req, res) => {
 
 // Update a employee by the id in the request
 exports.update = async (req, res) => {
-    if(!req.body.user) {
-        req.body.userId = "64a075971f69fd0649069afe";
-    }
+    const userId = req.body.userId;
+    const employeeId = req.body.employeeId;
 
-    // Find the user who added the employee by their ID
-    const user = await UserModel.findById(req.body.userId).lean();
-
-    if (!user) {
+    if (!userId) {
       return res.status(404).json({ message: 'User not found. You must be logged in.' });
     }
     
-    const body = JSON.stringify({
+    const data = JSON.stringify({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
         phonenumber: req.body.phonenumber,
-        user: user._id
+        user: userId
     });
     const id = req.params.id
-    await EmployeeModel.findByIdAndUpdate(id, body, { useFindAndModify: false }).then(data => {
-        if (!data) {
-            res.status(404).send({
-                message: `Employee not found.`
-            });
-        }else{
-            res.send({ message: "Employee updated successfully." })
-        }
+    await EmployeeModel.findByIdAndUpdate(employeeId, data, { useFindAndModify: false }).then(data => {
+     
+            res.status(200).send({ message: "Employee updated successfully." });
+
     }).catch(err => {
         res.status(500).send({
             message: err.message
