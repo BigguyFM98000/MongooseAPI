@@ -45,7 +45,7 @@ exports.signup = (req, res, next) => {
   let { firstname, lastname, email, password } =
     req.body;
     console.log(firstname, lastname, email, password);
-  User.findOne({}).select("email")
+  User.findOne({email})
     .then((user) => {
       if (user) {
         return res

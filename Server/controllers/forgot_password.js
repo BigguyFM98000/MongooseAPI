@@ -71,25 +71,26 @@ exports.redirect = async (req, res) => {
 
 // Step 5: Create a route to handle the password reset form submission
 exports.resetform = async (req, res) => {
-  const token = req.body.token;
-  const password = req.body.password;
   const email = req.body.email;
+  const newPassword = req.body.password;
+  const token = req.body.token;
 
-  try {
-    const user = await UserModel.findOne({
-      email: email
-    });
-    if (!user) {
-      // Handle case where token is invalid or expired
-      return res.status(400).json({ message: 'Invalid or expired token.' });
-    }
+  const useDetails = await UserModel.findOne({email, token}).then((res) => {
+    const userId = res._id;
+  }).catch((error) => {
+    console.log(error);
+    res.status(500).json({ message: 'Server error.' });
+  });
 
-    
+ try{
+    const newPassword = await bcrypt.hash(password, 10);
+    resetTokenExpirationTime = new Date().toString();
     // Update the user's password and clear the reset token fields
-    user.password = await bcrypt.hash(password, 10);
-    user.resetTokenExpirationTime = new Date().toString();
-    await UserModel.save();
-
+    const user = new UserModel({
+      password: newPassword,
+      resetTokenExpirationTime: resetTokenExpirationTime,
+  });
+    await user.save();
     res.json({ message: 'Password reset successful.' });
   } catch (error) {
     console.error(error);
