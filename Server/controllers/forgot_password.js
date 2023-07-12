@@ -71,33 +71,26 @@ exports.redirect = async (req, res) => {
 
 // Step 5: Create a route to handle the password reset form submission
 exports.resetform = async (req, res) => {
-
   const newPassword = req.body.password;
   const token = req.body.token;
   const resetTokenExpirationTime = req.body.resetTokenExpirationTime;
-
-  const useDetails = await UserModel.findOne({ token }).then((res) => {
-    const userId = res._id;
-  }).catch((error) => {
-    console.log(error);
-    res.status(500).json({ message: 'Server error.' });
-  });
+  let userId;
 
   try {
-    const newPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
     // Update the user's password and clear the reset token fields
-    const body = JSON.stringify({
+    const body = {
       token: token,
-      password: newPassword,
+      password: hashedPassword,
       resetTokenExpirationTime: resetTokenExpirationTime,
-    });
+    };
     console.log(userId);
-    await UserModelModel.findByIdAndUpdate(userId, body, { useFindAndModify: false }).then(data => {
+    await UserModelModel.findByIdAndUpdate(userId, body, { useFindAndModify: false }).then((data) => {
       res.status(200).json({ message: 'Password reset successful.' });
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error.' });
   }
-}
- 
+  
+};
