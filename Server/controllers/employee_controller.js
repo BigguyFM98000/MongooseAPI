@@ -77,8 +77,8 @@ exports.findOne = async (req, res) => {
 
 // Update a employee by the id in the request
 exports.update = async (req, res) => {
-    const userId = req.params.userId;
-    const employeeId = req.body.id;
+    const userId =    req.body.userId;
+    const employeeId = req.params.id;
 
     if (!userId) {
       return res.status(404).json({ message: 'User not found. You must be logged in.' });
