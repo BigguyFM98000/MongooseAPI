@@ -91,7 +91,7 @@ exports.update = async (req, res) => {
         phonenumber: req.body.phonenumber,
         user: userId
     });
-    const id = req.params.id
+   
     await EmployeeModel.findByIdAndUpdate(employeeId, data, { useFindAndModify: false }).then(data => {
      
             res.status(200).send({ message: "Employee updated successfully." });
