@@ -1,5 +1,6 @@
 const EmployeeModel = require('../models/employees_model');
 const UserModel = require('../models/user_model');
+const ObjectId = require('mongoose').ObjectId;
 
 // Create and Save a new employee
 exports.create = (req, res) => {
@@ -15,7 +16,7 @@ exports.create = (req, res) => {
         lastname: req.body.lastname,
         email: req.body.email,
         phonenumber: req.body.phonenumber,
-        user: req.body.userId
+        user: new ObjectId(req.body.userId)
     });
     
     employee.save().then((response) => {
