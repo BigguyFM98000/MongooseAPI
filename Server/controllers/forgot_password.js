@@ -95,7 +95,7 @@ exports.resetform = async (req, res) => {
       resetTokenExpirationTime: resetTokenExpirationTime,
     };
     console.log(userId);
-    await UserModelModel.findByIdAndUpdate(userId, body, { useFindAndModify: false }).then((data) => {
+    await UserModel.findByIdAndUpdate(userId, body, { useFindAndModify: false }).then((data) => {
       res.status(200).json({ message: 'Password reset successful.' });
     });
   } catch (error) {
