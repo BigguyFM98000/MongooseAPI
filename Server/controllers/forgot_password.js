@@ -13,10 +13,10 @@ exports.send = async (req, res) => {
   const { email } = req.body;
 
   const verifyCode = crypto.randomBytes(35).toString('hex');
-    const verificationCode = crypto
-      .createHash('sha256')
-      .update(verifyCode)
-      .digest('hex');
+  const verificationCode = crypto
+    .createHash('sha256')
+    .update(verifyCode)
+    .digest('hex');
 
   const TokenSentTime = new Date().toString(); // time link is sent   
   // const expirationTime = Date.now() + 3600000; 
@@ -59,7 +59,7 @@ exports.redirect = async (req, res) => {
     if (timeNow < resetTokenExpiration.resetTokenExpiration) {
       // Render the password reset page
       res.render('reset-password', { token });
-    }else{
+    } else {
       // Handle case of expired token being sent
       return res.status(400).json({ message: 'Invalid or expired token.' });
     }
@@ -71,29 +71,33 @@ exports.redirect = async (req, res) => {
 
 // Step 5: Create a route to handle the password reset form submission
 exports.resetform = async (req, res) => {
-  const email = req.body.email;
+
   const newPassword = req.body.password;
   const token = req.body.token;
+  const resetTokenExpirationTime = req.body.resetTokenExpirationTime;
 
-  const useDetails = await UserModel.findOne({email, token}).then((res) => {
+  const useDetails = await UserModel.findOne({ token }).then((res) => {
     const userId = res._id;
   }).catch((error) => {
     console.log(error);
     res.status(500).json({ message: 'Server error.' });
   });
 
- try{
+  try {
     const newPassword = await bcrypt.hash(password, 10);
-    resetTokenExpirationTime = new Date().toString();
     // Update the user's password and clear the reset token fields
-    const user = new UserModel({
+    const body = JSON.stringify({
+      token: token,
       password: newPassword,
       resetTokenExpirationTime: resetTokenExpirationTime,
-  });
-    await user.save();
-    res.json({ message: 'Password reset successful.' });
+    });
+    console.log(userId);
+    await UserModelModel.findByIdAndUpdate(userId, body, { useFindAndModify: false }).then(data => {
+      res.status(200).json({ message: 'Password reset successful.' });
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error.' }); 
+    res.status(500).json({ message: 'Server error.' });
   }
 }
+ 
