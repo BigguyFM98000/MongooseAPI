@@ -87,11 +87,12 @@ exports.resetform = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    const updatedUser = await UserModel.findByIdAndUpdate(user._id, {
+    const body = JSON.stringify({
       token,
       password: hashedPassword,
       resetTokenExpirationTime,
-    }, { useFindAndModify: false });
+    })
+    const updatedUser = await UserModel.findByIdAndUpdate(user._id, body, { useFindAndModify: false });
 
     res.status(200).json({ message: 'Password reset successful.' });
   } catch (error) {
